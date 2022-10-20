@@ -1,0 +1,18 @@
+[[package]]
+name = "pygments"
+version = "2.13.0"
+description = "Pygments is a syntax highlighting package written in Python."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.extras]
+plugins = ["importlib-metadata"]
+
+[metadata]
+lock-version = "1.1"
+python-versions = "^3.10"
+content-hash = "71f126e0c3d3f188bdf8c3d797c52be1a28260b8795d7b5b84f8690796d80066"
+
+[metadata.files]
+pygments = []

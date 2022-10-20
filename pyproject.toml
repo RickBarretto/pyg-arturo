@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "pyg-arturo"
+version = "0.1.0"
+description = "A Pygments' extension to Arturo Language"
+authors = ["RickBarretto <78623871+RickBarretto@users.noreply.github.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Pygments = "^2.13.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
