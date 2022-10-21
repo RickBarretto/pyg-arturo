@@ -8,28 +8,6 @@ class ArturoLexer(RegexLexer):
     filenames = ['*.art']
     mimetypes = None
 
-    def string():
-
-        def simple():
-            return [
-
-            ]
-
-        def template():
-            return [
-
-            ]
-
-        def sub_languages():
-            return [
-
-            ]
-
-        def end_of_file():
-            return [
-
-            ]
-
     tokens = {
         'root': [
             include('comments'),
@@ -122,15 +100,19 @@ class ArturoLexer(RegexLexer):
             ],
 
 
-            'string': [
-                string.simple(),
-                string.template(),
-                string.sub_languages(),
-                string.end_of_file()
-            ],
-            'type': [
-                (r'\:\w+', Name.Constant)
-            ],
+        'string': [
+            (r'"', String.Double, 'inside-string')
+        ],
+
+        'inside-string': [
+            (r'\\\\', String.Escape),   # Escaping backslash
+            (r'\\n', String.Escape),    # Escaping NewLine control
+            (r'\\t', String.Escape),    # Escaping Tabulation control
+            (r'\\"', String.Escape),    # Escaping Quote Character
+            (r'\|.*?\|', String.Interpol),  # Interpolation
+            (r'"', String.Double, '#pop'),  # Closing Quote
+            (r'.', String)                  # String Content
+        ],
 
 
         'builtin_functions': [
@@ -172,7 +154,7 @@ class ArturoLexer(RegexLexer):
                 'unique', 'unless', 'until', 'unzip', 'upper', 'values', 'var',
                 'variance', 'volume', 'webview', 'while', 'with', 'wordwrap',
                 'write', 'xnor', 'xor', 'zip'
-            ), prefix=r'\b', suffix=r'\b'), Name.Function)
+            ), prefix=r'\b', suffix=r'\b'), Name.Builtin)
         ],
             'builtin-predicate-functions': [
             (words((
@@ -188,7 +170,7 @@ class ArturoLexer(RegexLexer):
                 'sorted', 'standalone', 'string', 'subset', 'suffix',
                 'superset', 'ymbol', 'true', 'try', 'type', 'unless', 'upper',
                 'when', 'whitespace', 'word', 'xnor', 'xor', 'zero'
-                ), prefix=r'\b', suffix=r'\?\b'), Name.Function)
+                ), prefix=r'\b', suffix=r'\?\b'), Name.Builtin)
             ],
 
     }
