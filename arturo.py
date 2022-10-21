@@ -112,7 +112,6 @@ class ArturoLexer(RegexLexer):
             include('integer'),
             include('label'),
             include('literal'),
-            include('regex'),
             include('string'),
             include('type'),
         ],
@@ -142,10 +141,6 @@ class ArturoLexer(RegexLexer):
                 (r'\'(?:\w+\b\??:?)',
                             Name.Constant)
             ],
-            'regex': [
-                (r'\{\/.*?\/\}',
-                            Name.Constant)
-            ],
             'type': [
                 (r'\:\w+',  Name.Constant)
             ],
@@ -159,6 +154,7 @@ class ArturoLexer(RegexLexer):
             (r'"',   String.Double, 'inside-simple-string'),
             (r'»',   String.Single, 'inside-smart-string' ),
             (r'«««', String.Double, 'inside-safe-string'  ),
+            (r'\{\/', String.Regex, 'inside-regex-string' ),
 
             # Multi Line Strings
             (r'\{\:',   String.Double, 'inside-curly-verb-string'),
@@ -202,8 +198,14 @@ class ArturoLexer(RegexLexer):
 
         'inside-safe-string': [
             include('string-basics'),
-            string_end(r'»»»', String.Double),       # Closing Quote
+            string_end(r'»»»', String.Double),      # Closing Quote
             include('string-content-single-line')   # String Content
+        ],
+
+        'inside-regex-string': [
+            include('string-basics'),
+            string_end(r'\/\}', String.Double),     # Closing Quote
+            (r'.',              String.Regex ),    # String Content
         ],
 
         'inside-curly-verb-string': [
