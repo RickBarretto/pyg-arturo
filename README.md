@@ -10,7 +10,7 @@ $ pygmentize -x -l arturo.py:ArturoLexer test.art
 
 ## TODO
 
-- [ ] Attributes
+- [x] Attributes
 - [x] Bool
 - [x] Builtin
     - [x] Functions
