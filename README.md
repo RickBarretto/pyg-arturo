@@ -5,7 +5,10 @@
 ## Testing Lexer
 
 ```shell
+# Outputs on terminal
 $ pygmentize -x -l arturo.py:ArturoLexer test.art
+# Outputs a html
+$ pygmentize -x -f html -O full -o test.html -l arturo.py:ArturoLexer test.art
 ```
 
 ## TODO
