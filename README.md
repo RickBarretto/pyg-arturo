@@ -29,13 +29,20 @@ $ pygmentize -x -l arturo.py:ArturoLexer test.art
     - [ ] Add regex sub-language
 - [x] Sugar Syntax
 - [ ] Strings
-    - [ ] Blocks
+    - [x] Simple Strings
+        - [x] Interpolation
     - [ ] Curly
+        - [ ] Interpolation
     - [ ] End of File strings
-    - [ ] Interpolation
+        - [ ] Interpolation
     - [ ] Multistring
+        - [ ] Interpolation
     - [ ] Safe Strings
+        - [ ] Interpolation
     - [ ] Smart Strings
+        - [ ] Interpolation
     - [ ] Sub-languages
+        - [ ] Interpolation
     - [ ] Templates
+        - [ ] Interpolation
 - [x] Type

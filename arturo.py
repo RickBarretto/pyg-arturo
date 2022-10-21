@@ -101,10 +101,10 @@ class ArturoLexer(RegexLexer):
 
 
         'string': [
-            (r'"', String.Double, 'inside-string')
+            (r'"', String.Double, 'inside-simple-string')
         ],
 
-        'inside-string': [
+        'inside-simple-string': [
             (r'\\\\', String.Escape),   # Escaping backslash
             (r'\\n', String.Escape),    # Escaping NewLine control
             (r'\\t', String.Escape),    # Escaping Tabulation control
