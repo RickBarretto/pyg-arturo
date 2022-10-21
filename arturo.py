@@ -70,7 +70,8 @@ class ArturoLexer(RegexLexer):
             (r';.*$', Comment.Single),
         ],
             'shebang': [
-                (r'\\A(#!).*(?=$)', Comment.Hashbang)
+                (r'\\A(#!).*(?=$)',
+                    Comment.Hashbang)
             ],
 
         'operators': [
@@ -94,7 +95,7 @@ class ArturoLexer(RegexLexer):
 
         ],
             'punctuation': [
-                (r'[()[\],]',    Punctuation),
+                (r'[()[\],]',   Punctuation),
             ],
             'sugar':[
                 (r'->', Operator),
@@ -121,62 +122,67 @@ class ArturoLexer(RegexLexer):
                     Name.Constant)
             ],
             'character': [
-                (r'`.`', String.Char)
+                (r'`.`',    String.Char)
             ],
             'color': [
-                (r'#\w+', Name.Constant)
+                (r'#\w+',   Name.Constant)
             ],
             'float': [
-                (r'[0-9]+\.[0-9]+', Number.Float)
+                (r'[0-9]+\.[0-9]+',
+                            Number.Float)
             ],
             'integer': [
                 (r'[0-9]+', Number.Integer)
             ],
             'label': [
-                (r'\w+\b\??:', Name.Constant)
+                (r'\w+\b\??:',
+                            Name.Constant)
             ],
             'literal': [
-                (r'\'(?:\w+\b\??:?)', Name.Constant)
+                (r'\'(?:\w+\b\??:?)',
+                            Name.Constant)
             ],
             'regex': [
-                (r'\{\/.*?\/\}', Name.Constant)
+                (r'\{\/.*?\/\}',
+                            Name.Constant)
             ],
             'type': [
-                (r'\:\w+', Name.Constant)
+                (r'\:\w+',  Name.Constant)
             ],
             'attributes': [
-                (r'\.\w+', Name.Attribute)
+                (r'\.\w+',  Name.Attribute)
             ],
 
 
         'string': [
             # Single Line Strings
-            (r'"', String.Double, 'inside-simple-string'),
-            (r'»', String.Single, 'inside-smart-string'),
-            (r'«««', String.Double, 'inside-safe-string'),
+            (r'"',   String.Double, 'inside-simple-string'),
+            (r'»',   String.Single, 'inside-smart-string' ),
+            (r'«««', String.Double, 'inside-safe-string'  ),
 
             # Multi Line Strings
-            (r'\{\:', String.Double, 'inside-curly-verb-string'),
-            (r'(\{)(\!)(\w+)(\s|\n)([\w\W]*?)(^\})', handle_annotated_strings),
-            (r'\{', String.Single, 'inside-curly-string'),
-            (r'\-{3,}', String.Single, 'inside-eof-string'),
+            (r'\{\:',   String.Double, 'inside-curly-verb-string'),
+            (r'(\{)(\!)(\w+)(\s|\n)([\w\W]*?)(^\})',
+                                         handle_annotated_strings),
+            (r'\{',     String.Single, 'inside-curly-string'     ),
+            (r'\-{3,}', String.Single, 'inside-eof-string'       ),
         ],
             'string-basics': [
                 include('string-interpol'),
                 include('string-escape')
             ],
-            'string-interpol': [
-                (r'\|.*?\|',
-                        String.Interpol), # Interpolation
-            ],
-            'string-escape': [
-                (r'\\\\', String.Escape), # Escaping backslash
-                (r'\\n',  String.Escape), # Escaping NewLine control
-                (r'\\t',  String.Escape), # Escaping Tabulation control
-                (r'\\"',  String.Escape), # Escaping Quote Character
-            ],
+                'string-interpol': [
+                    (r'\|.*?\|',
+                            String.Interpol), # Interpolation
+                ],
+                'string-escape': [
+                    (r'\\\\', String.Escape), # Escaping backslash
+                    (r'\\n',  String.Escape), # Escaping NewLine control
+                    (r'\\t',  String.Escape), # Escaping Tabulation control
+                    (r'\\"',  String.Escape), # Escaping Quote Character
+                ],
             'string-content-single-line': [
-                (r'.', String)
+                (r'.',      String)
             ],
             'string-content-multi-line': [
                 (r'[\s\S]', String)
