@@ -19,8 +19,8 @@ class ArturoLexer(RegexLexer):
     tokens = {
         'root': [
             include('comments'),
-            include('operators'),
             include('constants'),
+            include('operators'),
             include('builtin_functions'),
         ],
 
@@ -109,11 +109,15 @@ class ArturoLexer(RegexLexer):
 
 
         'string': [
+            # Single Line Strings
             (r'"', String.Double, 'inside-simple-string'),
             (r'»', String.Single, 'inside-smart-string'),
             (r'«««', String.Double, 'inside-safe-string'),
+
+            # Multi Line Strings
             (r'\{\:', String.Double, 'inside-curly-verb-string'),
             (r'\{', String.Single, 'inside-curly-string'),
+            (r'\-{3,}', String.Single, 'inside-eof-string')
         ],
 
             'string-interpol': [
@@ -165,6 +169,13 @@ class ArturoLexer(RegexLexer):
             include('string-escape'),
             include('string-interpol'),
             string_end(r'\}', String.Single),       # Closing Quote
+            include('string-content-multi-line')    # String Content
+        ],
+
+        'inside-eof-string': [
+            include('string-escape'),
+            include('string-interpol'),
+            string_end(r'\Z$', String.Single),       # Closing Quote
             include('string-content-multi-line')    # String Content
         ],
 

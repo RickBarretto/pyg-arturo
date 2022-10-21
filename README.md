@@ -32,8 +32,8 @@ $ pygmentize -x -l arturo.py:ArturoLexer test.art
     - [x] Curly
         - [x] Interpolation
         - [x] Curly-Verbatin
-    - [ ] End of File strings
-        - [ ] Interpolation
+    - [x] End of File strings
+        - [x] Interpolation
     - [x] Safe Strings
         - [x] Interpolation
     - [x] Simple Strings
