@@ -114,6 +114,14 @@ class ArturoLexer(RegexLexer):
             'regex': [
                 (r'\{\/.*?\/\}', Name.Constant)
             ],
+            'type': [
+                (r'\:\w+', Name.Constant)
+            ],
+            'attributes': [
+                (r'\.\w+', Name.Attribute)
+            ],
+
+
             'string': [
                 string.simple(),
                 string.template(),
