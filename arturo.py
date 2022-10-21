@@ -103,7 +103,7 @@ class ArturoLexer(RegexLexer):
         'string': [
             (r'"', String.Double, 'inside-simple-string'),
             (r'»', String.Single, 'inside-smart-string'),
-            (r'\{\:', String.Single, 'inside-curly-verb-string'),
+            (r'\{\:', String.Double, 'inside-curly-verb-string'),
             (r'\{', String.Single, 'inside-curly-string'),
         ],
 
@@ -146,7 +146,6 @@ class ArturoLexer(RegexLexer):
             (r'\:\}', String.Double, '#pop'),  # Closing Quote
             (r'[\s\S]', String)                  # String Content
         ],
-
 
         'builtin_functions': [
             include('builtin-predicate-functions'),
