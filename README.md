@@ -4,6 +4,15 @@
 
 ## Testing Lexer
 
+
+```shell
+$ pip install --user pipx
+$ pipx ensurepath
+$ pipx completions
+$ git clone https://github.com/RickBarretto/pyg-arturo
+$ pipx install Pygments
+```
+
 ```shell
 # Outputs on terminal
 $ pygmentize -x -l arturo.py:ArturoLexer test.art
