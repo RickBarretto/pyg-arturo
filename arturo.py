@@ -1,5 +1,11 @@
-from pygments.lexer import RegexLexer, include, words
-from pygments.token import Name, Comment, Operator, Punctuation, Keyword, String, Number
+import re
+
+from pygments.lexer import RegexLexer, DelegatingLexer, include, bygroups, \
+    using, this, do_insertions, default, words
+from pygments.token import Text, Comment, Operator, Keyword, Name, String, \
+    Number, Punctuation, Generic, Other
+
+from pygments.util import get_bool_opt, ClassNotFound
 
 class ArturoLexer(RegexLexer):
 
@@ -15,6 +21,41 @@ class ArturoLexer(RegexLexer):
             >>> string_end(r'"', String.Single)
         """
         return (regex_pattern, string_type, '#pop')
+
+    def handle_annotated_strings(self, match):
+        """
+        match args:
+            1:open_string,
+            2:exclamation_mark,
+            3:lang_name,
+            4:space_or_newline,
+            5:code,
+            6:close_string
+        """
+        from pygments.lexers import get_lexer_by_name
+
+        # Header's section
+        yield match.start(1),  String.Double  ,  match.group(1)
+        yield match.start(2),  String.Interpol,  match.group(2)
+        yield match.start(3),  String.Interpol,  match.group(3)
+        yield match.start(4),  Text.Whitespace,  match.group(4)
+
+        lexer = None
+        if self.handle_annotateds:
+            try:
+                lexer = get_lexer_by_name( match.group(3).strip() )
+            except ClassNotFound:
+                pass
+        code = match.group(5)
+
+        if lexer is None:
+            yield match.group(5), String, code
+        else:
+            yield from do_insertions([], lexer.get_tokens_unprocessed(code))
+
+        yield match.start(6), String.Double, match.group(6)
+
+
 
     tokens = {
         'root': [
@@ -116,8 +157,9 @@ class ArturoLexer(RegexLexer):
 
             # Multi Line Strings
             (r'\{\:', String.Double, 'inside-curly-verb-string'),
+            (r'(\{)(\!)(\w+)(\s|\n)([\w\W]*?)(^\})', handle_annotated_strings),
             (r'\{', String.Single, 'inside-curly-string'),
-            (r'\-{3,}', String.Single, 'inside-eof-string')
+            (r'\-{3,}', String.Single, 'inside-eof-string'),
         ],
 
             'string-interpol': [
@@ -238,6 +280,10 @@ class ArturoLexer(RegexLexer):
             ],
 
     }
+
+    def __init__(self, **options):
+        self.handle_annotateds = get_bool_opt(options, 'handle_annotateds', True)
+        RegexLexer.__init__(self, **options)
 
 __all__ = [
     'ArturoLexer'

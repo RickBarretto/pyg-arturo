@@ -29,6 +29,7 @@ $ pygmentize -x -l arturo.py:ArturoLexer test.art
     - [ ] Add regex sub-language
 - [x] Sugar Syntax
 - [ ] Strings
+    - [x] Annotated Strings (Sub-languages)
     - [x] Curly
         - [x] Interpolation
         - [x] Curly-Verbatin
@@ -40,8 +41,6 @@ $ pygmentize -x -l arturo.py:ArturoLexer test.art
         - [x] Interpolation
     - [x] Smart Strings
         - [x] Interpolation
-    - [ ] Sub-languages
-        - [ ] Interpolation
     - [ ] Templates
         - [ ] Interpolation
 - [x] Type
