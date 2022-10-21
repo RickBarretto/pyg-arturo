@@ -36,6 +36,8 @@ $ pygmentize -x -l arturo.py:ArturoLexer test.art
         - [ ] Interpolation
     - [x] Safe Strings
         - [x] Interpolation
+    - [x] Simple Strings
+        - [x] Interpolation
     - [x] Smart Strings
         - [x] Interpolation
     - [ ] Sub-languages

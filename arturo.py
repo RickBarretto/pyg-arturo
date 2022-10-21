@@ -111,6 +111,7 @@ class ArturoLexer(RegexLexer):
         'string': [
             (r'"', String.Double, 'inside-simple-string'),
             (r'»', String.Single, 'inside-smart-string'),
+            (r'«««', String.Double, 'inside-safe-string'),
             (r'\{\:', String.Double, 'inside-curly-verb-string'),
             (r'\{', String.Single, 'inside-curly-string'),
         ],
@@ -143,6 +144,13 @@ class ArturoLexer(RegexLexer):
             include('string-escape'),
             include('string-interpol'),
             string_end(r'\n', String.Single),       # Closing Quote
+            include('string-content-single-line')   # String Content
+        ],
+
+        'inside-safe-string': [
+            include('string-escape'),
+            include('string-interpol'),
+            string_end(r'»»»', String.Double),       # Closing Quote
             include('string-content-single-line')   # String Content
         ],
 
