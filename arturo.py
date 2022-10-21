@@ -166,11 +166,16 @@ class ArturoLexer(RegexLexer):
         ],
             'string-basics': [
                 include('string-interpol'),
-                include('string-escape')
+                include('string-escape'),
+                include('string-templates'),
             ],
                 'string-interpol': [
                     (r'\|.*?\|',
                             String.Interpol), # Interpolation
+                ],
+                'string-templates': [
+                    (r'\<\|\|.*?\|\|\>',
+                            String.Interpol), # Templates
                 ],
                 'string-escape': [
                     (r'\\\\', String.Escape), # Escaping backslash
