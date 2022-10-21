@@ -102,7 +102,9 @@ class ArturoLexer(RegexLexer):
 
         'string': [
             (r'"', String.Double, 'inside-simple-string'),
-            (r'»', String.Single, 'inside-smart-string')
+            (r'»', String.Single, 'inside-smart-string'),
+            (r'\{\:', String.Single, 'inside-curly-verb-string'),
+            (r'\{', String.Single, 'inside-curly-string'),
         ],
 
         'inside-simple-string': [
@@ -123,6 +125,26 @@ class ArturoLexer(RegexLexer):
             (r'\|.*?\|', String.Interpol),  # Interpolation
             (r'\n', String.Double, '#pop'),  # Closing Quote
             (r'.', String)                  # String Content
+        ],
+
+        'inside-curly-string': [
+            (r'\\\\', String.Escape),   # Escaping backslash
+            (r'\\n', String.Escape),    # Escaping NewLine control
+            (r'\\t', String.Escape),    # Escaping Tabulation control
+            (r'\\"', String.Escape),    # Escaping Quote Character
+            (r'\|.*?\|', String.Interpol),  # Interpolation
+            (r'\}', String.Double, '#pop'),  # Closing Quote
+            (r'[\s\S]', String)                  # String Content
+        ],
+
+        'inside-curly-verb-string': [
+            (r'\\\\', String.Escape),   # Escaping backslash
+            (r'\\n', String.Escape),    # Escaping NewLine control
+            (r'\\t', String.Escape),    # Escaping Tabulation control
+            (r'\\"', String.Escape),    # Escaping Quote Character
+            (r'\|.*?\|', String.Interpol),  # Interpolation
+            (r'\:\}', String.Double, '#pop'),  # Closing Quote
+            (r'[\s\S]', String)                  # String Content
         ],
 
 
