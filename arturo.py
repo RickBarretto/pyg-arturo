@@ -9,12 +9,12 @@ class ArturoLexer(RegexLexer):
     mimetypes = None
 
 
-    def string_end(regex_pattern: str) -> list[tuple]:
+    def string_end(regex_pattern: str, string_type) -> list[tuple]:
         """
         Usage:
-            >>> string_end(r'"')
+            >>> string_end(r'"', String.Single)
         """
-        return (regex_pattern, String.Double, '#pop')
+        return (regex_pattern, string_type, '#pop')
 
     tokens = {
         'root': [
@@ -135,28 +135,28 @@ class ArturoLexer(RegexLexer):
         'inside-simple-string': [
             include('string-escape'),
             include('string-interpol'),
-            string_end(r'"'),                       # Closing Quote
+            string_end(r'"', String.Double),        # Closing Quote
             include('string-content-single-line')   # String Content
         ],
 
         'inside-smart-string': [
             include('string-escape'),
             include('string-interpol'),
-            string_end(r'\n'),                      # Closing Quote
+            string_end(r'\n', String.Single),       # Closing Quote
             include('string-content-single-line')   # String Content
-        ],
-
-        'inside-curly-string': [
-            include('string-escape'),
-            include('string-interpol'),
-            string_end(r'\}'),                      # Closing Quote
-            include('string-content-multi-line')    # String Content
         ],
 
         'inside-curly-verb-string': [
             include('string-escape'),
             include('string-interpol'),
-            string_end(r'\:\}'),                    # Closing Quote
+            string_end(r'\:\}', String.Double),     # Closing Quote
+            include('string-content-multi-line')    # String Content
+        ],
+
+        'inside-curly-string': [
+            include('string-escape'),
+            include('string-interpol'),
+            string_end(r'\}', String.Single),       # Closing Quote
             include('string-content-multi-line')    # String Content
         ],
 
