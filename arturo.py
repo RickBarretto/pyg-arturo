@@ -8,6 +8,14 @@ class ArturoLexer(RegexLexer):
     filenames = ['*.art']
     mimetypes = None
 
+
+    def string_end(regex_pattern: str) -> list[tuple]:
+        """
+        Usage:
+            >>> string_end(r'"')
+        """
+        return (regex_pattern, String.Double, '#pop')
+
     tokens = {
         'root': [
             include('comments'),
@@ -107,44 +115,49 @@ class ArturoLexer(RegexLexer):
             (r'\{', String.Single, 'inside-curly-string'),
         ],
 
+            'string-interpol': [
+                (r'\|.*?\|',
+                        String.Interpol), # Interpolation
+            ],
+            'string-escape': [
+                (r'\\\\', String.Escape), # Escaping backslash
+                (r'\\n',  String.Escape), # Escaping NewLine control
+                (r'\\t',  String.Escape), # Escaping Tabulation control
+                (r'\\"',  String.Escape), # Escaping Quote Character
+            ],
+            'string-content-single-line': [
+                (r'.', String)
+            ],
+            'string-content-multi-line': [
+                (r'[\s\S]', String)
+            ],
+
         'inside-simple-string': [
-            (r'\\\\', String.Escape),   # Escaping backslash
-            (r'\\n', String.Escape),    # Escaping NewLine control
-            (r'\\t', String.Escape),    # Escaping Tabulation control
-            (r'\\"', String.Escape),    # Escaping Quote Character
-            (r'\|.*?\|', String.Interpol),  # Interpolation
-            (r'"', String.Double, '#pop'),  # Closing Quote
-            (r'.', String)                  # String Content
+            include('string-escape'),
+            include('string-interpol'),
+            string_end(r'"'),                       # Closing Quote
+            include('string-content-single-line')   # String Content
         ],
 
         'inside-smart-string': [
-            (r'\\\\', String.Escape),   # Escaping backslash
-            (r'\\n', String.Escape),    # Escaping NewLine control
-            (r'\\t', String.Escape),    # Escaping Tabulation control
-            (r'\\"', String.Escape),    # Escaping Quote Character
-            (r'\|.*?\|', String.Interpol),  # Interpolation
-            (r'\n', String.Double, '#pop'),  # Closing Quote
-            (r'.', String)                  # String Content
+            include('string-escape'),
+            include('string-interpol'),
+            string_end(r'\n'),                      # Closing Quote
+            include('string-content-single-line')   # String Content
         ],
 
         'inside-curly-string': [
-            (r'\\\\', String.Escape),   # Escaping backslash
-            (r'\\n', String.Escape),    # Escaping NewLine control
-            (r'\\t', String.Escape),    # Escaping Tabulation control
-            (r'\\"', String.Escape),    # Escaping Quote Character
-            (r'\|.*?\|', String.Interpol),  # Interpolation
-            (r'\}', String.Double, '#pop'),  # Closing Quote
-            (r'[\s\S]', String)                  # String Content
+            include('string-escape'),
+            include('string-interpol'),
+            string_end(r'\}'),                      # Closing Quote
+            include('string-content-multi-line')    # String Content
         ],
 
         'inside-curly-verb-string': [
-            (r'\\\\', String.Escape),   # Escaping backslash
-            (r'\\n', String.Escape),    # Escaping NewLine control
-            (r'\\t', String.Escape),    # Escaping Tabulation control
-            (r'\\"', String.Escape),    # Escaping Quote Character
-            (r'\|.*?\|', String.Interpol),  # Interpolation
-            (r'\:\}', String.Double, '#pop'),  # Closing Quote
-            (r'[\s\S]', String)                  # String Content
+            include('string-escape'),
+            include('string-interpol'),
+            string_end(r'\:\}'),                    # Closing Quote
+            include('string-content-multi-line')    # String Content
         ],
 
         'builtin_functions': [
