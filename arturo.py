@@ -161,7 +161,10 @@ class ArturoLexer(RegexLexer):
             (r'\{', String.Single, 'inside-curly-string'),
             (r'\-{3,}', String.Single, 'inside-eof-string'),
         ],
-
+            'string-basics': [
+                include('string-interpol'),
+                include('string-escape')
+            ],
             'string-interpol': [
                 (r'\|.*?\|',
                         String.Interpol), # Interpolation
@@ -180,43 +183,37 @@ class ArturoLexer(RegexLexer):
             ],
 
         'inside-simple-string': [
-            include('string-escape'),
-            include('string-interpol'),
+            include('string-basics'),
             string_end(r'"', String.Double),        # Closing Quote
             include('string-content-single-line')   # String Content
         ],
 
         'inside-smart-string': [
-            include('string-escape'),
-            include('string-interpol'),
+            include('string-basics'),
             string_end(r'\n', String.Single),       # Closing Quote
             include('string-content-single-line')   # String Content
         ],
 
         'inside-safe-string': [
-            include('string-escape'),
-            include('string-interpol'),
+            include('string-basics'),
             string_end(r'»»»', String.Double),       # Closing Quote
             include('string-content-single-line')   # String Content
         ],
 
         'inside-curly-verb-string': [
-            include('string-escape'),
-            include('string-interpol'),
+            include('string-basics'),
             string_end(r'\:\}', String.Double),     # Closing Quote
             include('string-content-multi-line')    # String Content
         ],
 
         'inside-curly-string': [
-            include('string-escape'),
-            include('string-interpol'),
+            include('string-basics'),
             string_end(r'\}', String.Single),       # Closing Quote
             include('string-content-multi-line')    # String Content
         ],
 
         'inside-eof-string': [
-            include('string-escape'),
-            include('string-interpol'),
+            include('string-basics'),
             string_end(r'\Z$', String.Single),       # Closing Quote
             include('string-content-multi-line')    # String Content
         ],
