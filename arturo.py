@@ -60,6 +60,7 @@ class ArturoLexer(RegexLexer):
     tokens = {
         'root': [
             include('comments'),
+            (r'.', Text),
             include('constants'),
             include('operators'),
             include('builtin_functions'),
@@ -67,11 +68,12 @@ class ArturoLexer(RegexLexer):
         ],
 
         'comments': [
+            (r'(;)(.*)$', Comment.Single),
             include('shebang'),
             (r';.*$', Comment.Single),
         ],
             'shebang': [
-                (r'\\A(#!).*(?=$)',
+                (r'^((\s#!)|(#!))(.*)$',
                     Comment.Hashbang)
             ],
 
@@ -91,7 +93,7 @@ class ArturoLexer(RegexLexer):
             (r'-->|<->|<-->',       Operator),
             (r'<\\|\<|\>',          Operator),
             (r'\=\||\|\=',          Operator),
-            (r'\./|\^',             Operator),
+            (r'\./|\^|\.\.|\.',     Operator),
             (r'\\',                 Operator),
 
         ],
