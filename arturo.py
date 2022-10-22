@@ -63,12 +63,11 @@ class ArturoLexer(RegexLexer):
             include('constants'),
             include('builtin_functions'),
             include('operators'),
-            (r'.', Text),
+            (r'.', Name),
         ],
 
         'comments': [
-            (r'(;)(.*)$',
-                Comment.Single),
+            (r'(;)(.*)$', Comment.Single),
             include('shebang'),
         ],
             'shebang': [
@@ -100,10 +99,10 @@ class ArturoLexer(RegexLexer):
                 (r'[()[\],]',   Punctuation),
             ],
             'sugar':[
-                (r'->', Operator),
-                (r'=>', Operator),
-                (r'\|', Operator),
-                (r'::', Operator),
+                (r'->', Name.Decorator),
+                (r'=>', Name.Decorator),
+                (r'\|', Name.Decorator),
+                (r'::', Name.Decorator),
             ],
 
         'constants': [
@@ -139,15 +138,15 @@ class ArturoLexer(RegexLexer):
             ],
             'label': [
                 (r'\w+\b\??:',
-                        Name.Constant)
+                        Name.Label)
             ],
             'literal': [
                 (r'\'(?:\w+\b\??:?)',
-                        Name.Constant)
+                        Keyword.Declaration)
             ],
             'type': [
                 (r'\:\w+',
-                        Name.Constant)
+                        Keyword.Type)
             ],
             'attributes': [
                 (r'\.\w+',
