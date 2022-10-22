@@ -60,10 +60,10 @@ class ArturoLexer(RegexLexer):
     tokens = {
         'root': [
             include('comments'),
-            (r'.', Text),
             include('constants'),
-            include('operators'),
             include('builtin_functions'),
+            include('operators'),
+            (r'.', Text),
         ],
 
         'comments': [
@@ -113,7 +113,7 @@ class ArturoLexer(RegexLexer):
             include('integer'),
             include('label'),
             include('literal'),
-            include('string'),
+            include('strings'),
             include('type'),
         ],
 
@@ -150,7 +150,7 @@ class ArturoLexer(RegexLexer):
             ],
 
 
-        'string': [
+        'strings': [
             # Single Line Strings
             (r'"',   String.Double, 'inside-simple-string'),
             (r'»',   String.Single, 'inside-smart-string' ),
@@ -288,20 +288,21 @@ class ArturoLexer(RegexLexer):
             ), prefix=r'\b', suffix=r'\b'), Name.Builtin)
         ],
             'builtin-predicate-functions': [
-            (words((
-                'all', 'and', 'any', 'ascii', 'attr', 'attribute',
-                'attributeLabel', 'binary', 'block', 'char', 'contains',
-                'database', 'date', 'dictionary', 'empty', 'equal', 'even',
-                'every', 'exists', 'false', 'floating','function', 'greater',
-                'greaterOrEqual', 'if', 'in', 'inline', 'integer', 'is',
-                'key', 'label', 'leap', 'less', 'lessOrEqual', 'literal',
-                'logical', 'lower', 'nand', 'negative', 'nor', 'not',
-                'notEqual', 'null', 'numeric', 'odd', 'or', 'path',
-                'pathLabel', 'positive', 'prefix', 'prime', 'set', 'some',
-                'sorted', 'standalone', 'string', 'subset', 'suffix',
-                'superset', 'ymbol', 'true', 'try', 'type', 'unless', 'upper',
-                'when', 'whitespace', 'word', 'xnor', 'xor', 'zero'
-                ), prefix=r'\b', suffix=r'\?\b'), Name.Builtin)
+            (
+                r'\b('
+                r'all|and|any|ascii|attr|attribute|attributeLabel|binary|block'
+                r'|char|contains|database|date|dictionary|empty|equal|even'
+                r'|every|exists|false|floatin|function|greater|'
+                r'|greaterOrEqual|if|in|inline|integer|is|'
+                r'|key|label|leap|less|lessOrEqual|literal|'
+                r'|logical|lower|nand|negative|nor|not'
+                r'|notEqual|null|numeric|odd|or|path'
+                r'|pathLabel|positive|prefix|prime|set|some'
+                r'|sorted|standalone|string|subset|suffix'
+                r'|superset|ymbol|true|try|type|unless|upper'
+                r'|when|whitespace|word|xnor|xor|zero'
+                r')\b\?', Name.Builtin
+            )
             ],
 
     }
