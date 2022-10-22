@@ -4,7 +4,17 @@
 
 ## Testing Lexer
 
-
+### Using poetry
+```shell
+$ git clone https://github.com/RickBarretto/pyg-arturo
+$ poetry install
+$ poetry shell
+# Outputs on terminal
+$ poetry run pygmentize -x -l arturo.py:ArturoLexer test.art
+# Outputs a html
+$ poetry run pygmentize -x -f html -O full -o test.html -l arturo.py:ArturoLexer test.art
+```
+### Using pipx
 ```shell
 $ pip install --user pipx
 $ pipx ensurepath
