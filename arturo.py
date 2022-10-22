@@ -170,13 +170,23 @@ class ArturoLexer(RegexLexer):
                 include('string-templates'),
             ],
                 'string-interpol': [
-                    (r'\|.*?\|',
-                            String.Interpol), # Interpolation
+                    (r'\|',
+                        String.Interpol,
+                        'inside-interpol'), # Interpolation
                 ],
+                    'inside-interpol': [
+                        (r'\|', String.Interpol, '#pop'),
+                        (r'.', using(this)),
+                    ],
                 'string-templates': [
-                    (r'\<\|\|.*?\|\|\>',
-                            String.Interpol), # Templates
+                    (r'\<\|\|',
+                        String.Interpol,
+                        'inside-template'), # Templates
                 ],
+                    'inside-template': [
+                        (r'\|\|\>', String.Interpol, '#pop'),
+                        (r'.', using(this)),
+                    ],
                 'string-escape': [
                     (r'\\\\', String.Escape), # Escaping backslash
                     (r'\\n',  String.Escape), # Escaping NewLine control
