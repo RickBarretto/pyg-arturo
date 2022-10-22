@@ -64,13 +64,11 @@ class ArturoLexer(RegexLexer):
             include('constants'),
             include('operators'),
             include('builtin_functions'),
-            (r'(\s|\t)', Text.Whitespace)
         ],
 
         'comments': [
             (r'(;)(.*)$', Comment.Single),
             include('shebang'),
-            (r';.*$', Comment.Single),
         ],
             'shebang': [
                 (r'^((\s#!)|(#!))(.*)$',
