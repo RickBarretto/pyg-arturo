@@ -12,7 +12,7 @@ $ poetry shell
 # Outputs on terminal
 $ poetry run pygmentize -x -l arturo.py:ArturoLexer test.art
 # Outputs a html
-$ poetry run pygmentize -x -f html -O full -o test.html -l arturo.py:ArturoLexer test.art
+$ poetry run pygmentize -x -f html -O full -O debug_token_types -o test.html -l arturo.py:ArturoLexer test.art
 ```
 ### Using pipx
 ```shell
@@ -27,7 +27,7 @@ $ pipx install Pygments
 # Outputs on terminal
 $ pygmentize -x -l arturo.py:ArturoLexer test.art
 # Outputs a html
-$ pygmentize -x -f html -O full -o test.html -l arturo.py:ArturoLexer test.art
+$ pygmentize -x -f html -O full -O debug_token_types -o test.html -l arturo.py:ArturoLexer test.art
 ```
 
 ## TODO
