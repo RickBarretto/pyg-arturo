@@ -26,6 +26,30 @@ c3: {:
                     as the original
 :}
 
+annotatedStrings: {!md
+    # This is a markdown example
+
+    I'm a paragraph
+
+    > I'm a blockquote
+
+    ```c
+    #include <stdio.h>
+    int main() {
+        char * name = "World";
+        printf("Hello, %s!", name);
+        printf( "I'm a highlighted C code"
+                "inside Markdown highlighted code,"
+                "inside Arturo. Awesome!"
+            );
+        return 0;
+    }
+    ```
+}
+
+smartString: »I'm a string until the end of line    ; I'm not a comment
+safeString: «««I'm a safe string. 🙂»»»             ; I'm a comment
+
 ; characters
 ch: `c`
 
@@ -420,3 +444,8 @@ print a                                         ; NAME: John, SURNAME: Doe, AGE:
 ; sorting user objects (using custom comparator)
 sort @[a b]                                     ; Jane..., John...
 sort.descending @[a b]                          ; John..., Jane...
+
+eofString:
+---
+I'm an end of file
+Multiline string.
